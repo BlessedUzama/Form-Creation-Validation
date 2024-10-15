@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-
     const form = document.getElementById('registration-form');
     const feedbackDiv = document.getElementById('form-feedback');
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault()
-    
+    // Define the function to handle form submission and validation
+    function handleFormSubmission(event) {
+        event.preventDefault();
 
         const usernameInput = document.getElementById('username');
         const username = usernameInput.value.trim();
@@ -23,25 +22,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
         if (!email.includes('@') || !email.includes('.')) {
-        isValid = false;
-        messages.push('Email must include both "@" and "." characters.');
+            isValid = false;
+            messages.push('Email must include both "@" and "." characters.');
         }
 
         if (password.length < 8) {
             isValid = false;
-            messages.push('Password id too short.')
+            messages.push('Password is too short.');
         }
 
-    
         feedbackDiv.style.display = 'block';
-        if (isValid == true) {
+        if (isValid) {
             feedbackDiv.textContent = "Registration successful!";
             feedbackDiv.style.color = '#28a745';
-        }
-        if (isValid == false) {
+        } else {
             feedbackDiv.innerHTML = messages.join('<br>');
-            feedbackDiv.style.color = '#dc3545'
-
+            feedbackDiv.style.color = '#dc3545';
         }
-    })
-})
+    }
+
+    // Attach the form submission handler
+    form.addEventListener('submit', handleFormSubmission);
+});
